@@ -8,14 +8,20 @@ interface validation_dto {
     email: string;
 }
 
+const checkEmail = (email: string) => {
+    const regex = /^[^@]*@zod\.com$/;
+    return regex.test(email);
+}
+
 const checkPassword = (password: string) => {
-    return password === "12345";
+    const regex = /\d+/;
+    return regex.test(password);    
 }
 
 const validation_object = z.object({
-    email: z.string().email(),
-    username: z.string(),
-    password: z.string().refine(checkPassword),
+    email: z.string().refine(checkEmail, {message: "Only @zod.com emails are allowed"}),
+    username: z.string().min(5, {message: "username should be at least 5 characters long"}),
+    password: z.string().min(10, {message: "password should be at least 10 characters long"}).refine(checkPassword, {message: "at least one number (0123456789)"}),
 });
 
 
@@ -27,11 +33,11 @@ export async function LoginHandler(prevState: any,formData: FormData) {
         password: formData.get("password"),
     }
     const valid_data = validation_object.safeParse(data);
-    console.log(valid_data);
-    console.log(
-        {
-            result: valid_data.success,
-        errors: valid_data.error?.flatten().fieldErrors,})
+
+    console.log({
+        result: valid_data.success,
+        errors: valid_data.error?.flatten().fieldErrors,
+    })
     return {
         result: valid_data.success,
         errors: valid_data.error?.flatten().fieldErrors,
