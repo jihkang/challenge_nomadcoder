@@ -26,18 +26,13 @@ const validation_object = z.object({
 
 
 
-export async function LoginHandler(prevState: any,formData: FormData) {
+export async function LoginHandler(prevState: unknown,formData: FormData) {
     const data = {
         email: formData.get("email"),
         username: formData.get("username"),
         password: formData.get("password"),
     }
     const valid_data = validation_object.safeParse(data);
-
-    console.log({
-        result: valid_data.success,
-        errors: valid_data.error?.flatten().fieldErrors,
-    })
     return {
         result: valid_data.success,
         errors: valid_data.error?.flatten().fieldErrors,
