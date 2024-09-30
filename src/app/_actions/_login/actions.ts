@@ -1,6 +1,7 @@
 "use server";
 
 import {z} from "zod";
+import { createAccount } from "../../../lib/db";
 
 interface validation_dto {
     username: string;

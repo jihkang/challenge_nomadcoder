@@ -12,7 +12,7 @@ export default function Login() {
     const router = useRouter();
 
     if (state?.result === true) {
-        router.push('/');
+        router.push('/home');
     }
     return (
         <Form action={action}>
