@@ -1,6 +1,6 @@
 import { PrismaClient } from "@prisma/client";
 
-const db = new PrismaClient();
+export const db = new PrismaClient();
 
 interface UserProps {
     username: string;
@@ -8,7 +8,7 @@ interface UserProps {
     password: string;
 }
 
-export async function createAccount({...rest}: UserProps) {
+export async function createUser({...rest}: UserProps) {
     await db.user.create({
         data : {...rest}
     })

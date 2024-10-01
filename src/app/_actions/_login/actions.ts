@@ -1,7 +1,7 @@
 "use server";
 
 import {z} from "zod";
-import { createAccount } from "../../../lib/db";
+import { IronSession } from "iron-session";
 
 interface validation_dto {
     username: string;
@@ -25,8 +25,6 @@ const validation_object = z.object({
     password: z.string().min(10, {message: "password should be at least 10 characters long"}).refine(checkPassword, {message: "at least one number (0123456789)"}),
 });
 
-
-
 export async function LoginHandler(prevState: unknown,formData: FormData) {
     const data = {
         email: formData.get("email"),
@@ -34,6 +32,8 @@ export async function LoginHandler(prevState: unknown,formData: FormData) {
         password: formData.get("password"),
     }
     const valid_data = validation_object.safeParse(data);
+
+
     return {
         result: valid_data.success,
         errors: valid_data.error?.flatten().fieldErrors,

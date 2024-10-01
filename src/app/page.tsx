@@ -1,28 +1,19 @@
-"use client";
+import Link from "next/link";
 
-import Button from "@/components/Button";
-import Form from "@/components/Form";
-import Input from "@/components/Input";
-import { LoginHandler } from "@/_actions/_login/actions";
-import { useFormState } from "react-dom";
-import { useRouter } from "next/navigation";
+export default function Home() {
+  return (
+    <main className="flex min-h-screen max-h-screen overflow-y-scroll overflow-x-hidden flex-col items-center p-4 justify-between text-black">
+      <div className="flex h-auto w-full justify-end gap-2 bg-blue-300">
+        <Link href="/login" className="hover:bg-slate-400 bg-slate-200 px-2 rounded-md text-center">
+          <p>Login</p>
+        </Link>
+        <Link href="/create-account" className="hover:bg-slate-400 bg-slate-200 px-2 rounded-md text-centers">
+          Register
+        </Link>
+      </div>
+      <div className="flex flex-row flex-wrap w-full bg-blue-100 h-full">
 
-export default function Login() {
-    const [state, action, pending] = useFormState(LoginHandler, null);
-    const router = useRouter();
-
-    if (state?.result === true) {
-        router.push('/home');
-    }
-    return (
-        <Form action={action}>
-            <Input name="email" type="email" errors={state?.errors?.email} placeholder="Email" />
-            <Input name="username" type="text" errors={state?.errors?.username} placeholder="Username" />
-            <Input name="password" type="password" errors={state?.errors?.password} placeholder="Password" />
-            <Button pending={pending}>
-                {pending ? "Loading..." : "Login"}
-            </Button>
-            {state?.result && <button className="bg-teal-300 text-white">Success!</button>}
-        </Form>
-    );
+      </div>
+    </main>
+  );
 }
