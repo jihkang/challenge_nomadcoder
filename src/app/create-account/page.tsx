@@ -5,15 +5,10 @@ import Form from "@/components/Form";
 import Input from "@/components/Input";
 import createAccount  from "@/_actions/_register/actions";
 import { useFormState } from "react-dom";
-import { useRouter } from "next/navigation";
 
 export default function CreateAccount() {
     const [state, action, pending] = useFormState(createAccount, null);
-    const router = useRouter();
-
-    if (state?.code === 200) {
-        router.push('/');
-    }
+   
     return (
         <Form action={action}>
             <Input name="email" type="email" errors={state?.errors?.email} placeholder="Email" />

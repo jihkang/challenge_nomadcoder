@@ -4,6 +4,9 @@ import { z } from "zod";
 import bcrypt from "bcrypt"
 
 import { createUser, db } from "@/lib/db";
+import { getIronSession } from "iron-session";
+import { cookies } from "next/headers";
+import { redirect } from "next/navigation";
 
 const checkEmail = (email: string) => {
     const regex = /^[^@]*@zod\.com$/;
@@ -48,13 +51,10 @@ export default async function createAccount(prevState:unknown, form: FormData) {
 
   const hashed_password = await bcrypt.hash(valid_data.data.password, 12);
 
-  await createUser({
+  if (await createUser({
     ...valid_data.data,
     password: hashed_password,
-  });
-  
-  return {
-    result: valid_data.success,
-    errors: valid_data.error?.flatten()?.fieldErrors,
+  })) {
+    redirect("/profile");
   }
 }
