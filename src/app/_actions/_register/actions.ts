@@ -24,7 +24,7 @@ const checkEmailExists = async (email: string) => {
 
 const checkPassword = (password: string) => {
     const regex = /\d+/;
-    return regex.test(password);    
+    return regex.test(password);
 }
 
 const validation_object = z.object({
@@ -50,11 +50,12 @@ export default async function createAccount(prevState:unknown, form: FormData) {
   }
 
   const hashed_password = await bcrypt.hash(valid_data.data.password, 12);
-
-  if (await createUser({
+  console.log(hashed_password, valid_data.data.password);
+  const result = await createUser({
     ...valid_data.data,
     password: hashed_password,
-  })) {
+  })
+  if (result === true) {
     redirect("/profile");
   }
 }

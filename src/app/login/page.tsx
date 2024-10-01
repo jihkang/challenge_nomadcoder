@@ -11,12 +11,16 @@ export default function Login() {
     
     return (
         <Form action={action}>
-            <Input name="email" type="email" errors={state?.errors?.email} placeholder="Email" />
-            <Input name="username" type="text" errors={state?.errors?.username} placeholder="Username" />
-            <Input name="password" type="password" errors={state?.errors?.password} placeholder="Password" />
+            <Input name="email" type="email" errors={state?.field_errors?.email} placeholder="Email" />
+            <Input name="password" type="password" errors={state?.field_errors?.password} placeholder="Password" />
             <Button pending={pending}>
                 {pending ? "Loading..." : "Login"}
             </Button>
+            {state?.form_errors?.map((form_error) => 
+                <li key={form_error + "_error_key"}>
+                    <span>{form_error}</span>
+                </li>)
+            }
             {state?.result && <button className="bg-teal-300 text-white">Success!</button>}
         </Form>
     );
