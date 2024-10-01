@@ -20,9 +20,8 @@ const checkPassword = (password: string) => {
 }
 
 const validation_object = z.object({
-    email: z.string().refine(checkEmail, {message: "Only @zod.com emails are allowed"}),
-    username: z.string().min(5, {message: "username should be at least 5 characters long"}),
-    password: z.string().min(10, {message: "password should be at least 10 characters long"}).refine(checkPassword, {message: "at least one number (0123456789)"}),
+    username: z.string(),
+    password: z.string(),
 });
 
 export async function LoginHandler(prevState: unknown,formData: FormData) {
