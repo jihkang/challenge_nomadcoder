@@ -50,7 +50,6 @@ export default async function createAccount(prevState:unknown, form: FormData) {
   }
 
   const hashed_password = await bcrypt.hash(valid_data.data.password, 12);
-  console.log(hashed_password, valid_data.data.password);
   const result = await createUser({
     ...valid_data.data,
     password: hashed_password,

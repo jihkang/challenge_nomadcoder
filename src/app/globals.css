@@ -13,8 +13,8 @@
     @apply flex flex-col gap-2
   }
   button {
-    @apply px-10 text-center rounded-md rounded-2xl border-2 text-black
-  } 
+    @apply px-10 text-center rounded-md border-2 text-black
+  }
   input {
     @apply px-10 text-left rounded-2xl border-2
   }

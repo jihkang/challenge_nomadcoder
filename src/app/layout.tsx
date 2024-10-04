@@ -18,7 +18,9 @@ export default async function RootLayout({
   return (
     <html lang="en">
       <body className={inter.className}>
-        {children}
+        <main className="flex min-h-screen max-h-screen overflow-y-scroll overflow-x-hidden bg-slate-400 flex-col items-center p-4 justify-between text-black">
+          {children}
+        </main>
       </body>
     </html>
   );
