@@ -8,18 +8,5 @@ export async function getUser() {
         redirect("/");
     }
 
-    if (session?.data?.id) {
-        await db.tweet.create({
-            data: {
-                title: "hello",
-                content: "hello every one",
-                author: {
-                    connect: {
-                        id: session.data.id,
-                    }   
-                }
-            }
-        })
-    }
     return session.data;
 }
