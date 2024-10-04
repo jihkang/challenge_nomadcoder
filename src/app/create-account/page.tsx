@@ -5,6 +5,7 @@ import Form from "@/components/Form";
 import Input from "@/components/Input";
 import createAccount  from "@/_actions/_register/actions";
 import { useFormState } from "react-dom";
+import Link from "next/link";
 
 export default function CreateAccount() {
     const [state, action, pending] = useFormState(createAccount, null);
@@ -17,6 +18,9 @@ export default function CreateAccount() {
             <Button pending={pending}>
                 {pending ? "Loading..." : "Register"}
             </Button>
+            <Link href="/login">
+                login
+            </Link>
             {state?.result && <button className="bg-teal-300 text-white">Success!</button>}
         </Form>
     );

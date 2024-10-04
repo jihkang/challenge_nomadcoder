@@ -5,7 +5,7 @@ export async function getUser() {
     const session = await getUserDB();
     
     if (!session.result) {
-        redirect("/");
+        redirect("/create-account");
     }
 
     return session.data;

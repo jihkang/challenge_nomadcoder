@@ -3,6 +3,7 @@ import { getIronSession } from "iron-session";
 import bcrypt from "bcrypt";
 
 import { cookies } from "next/headers";
+import { redirect } from "next/navigation";
 
 export const db = new PrismaClient();
 
@@ -58,13 +59,13 @@ export async function getSession() {
 
 export async function getUserDB() {
     try {
-        const session = await getIronSession<UserPrismaProps>(cookies(), {
-            cookieName: "cookies_challenge",
-            password: process.env.PASSWORD_STRONG!
-        });
-        
+        const id = await getSession();
+        if (!id) {
+            return redirect("/create-account");
+        }
+    
         const user = await db.user.findUnique({where: {
-            id: session.id
+            id: id
         }, select : {
             id: true,
             username : true,
@@ -76,10 +77,7 @@ export async function getUserDB() {
             data: user
         };
     } catch (e) {
-        return {
-            result: false,
-            data: null
-        };
+        redirect("/create-account");
     }
 }
 

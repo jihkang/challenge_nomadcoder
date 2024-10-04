@@ -7,7 +7,7 @@ import { redirect } from "next/navigation";
 export const logout = async () => {
     const session = await getSession();
     await sessionOut();
-    redirect("/")
+    redirect("/create-account");
 }
 
 export const getTweet = async () => {

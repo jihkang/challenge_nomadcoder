@@ -15,7 +15,6 @@ export async function Tweets() {
 
 export default async function Home() {
   const {result} = await getUserDB();
-  
   return (
     <div className="flex flex-col h-full w-full gap-4">
       <div className="flex h-auto w-full justify-end gap-2">
