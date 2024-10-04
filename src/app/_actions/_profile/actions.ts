@@ -1,12 +1,25 @@
-import { getUserDB } from "@/lib/db";
+import { db, getUserDB } from "@/lib/db";
 import { redirect } from "next/navigation";
 
 export async function getUser() {
-    const {result, data} = await getUserDB();
+    const session = await getUserDB();
     
-    console.log(result, data);
-    if (!result) {
+    if (!session.result) {
         redirect("/");
     }
-    return data;
+
+    if (session?.data?.id) {
+        await db.tweet.create({
+            data: {
+                title: "hello",
+                content: "hello every one",
+                author: {
+                    connect: {
+                        id: session.data.id,
+                    }   
+                }
+            }
+        })
+    }
+    return session.data;
 }

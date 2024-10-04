@@ -52,22 +52,21 @@ export async function getSession() {
         cookieName: "cookies_challenge",
         password: process.env.PASSWORD_STRONG!
     })
-    console.log(session);
-    return session;
+
+    return session.id;
 }
 
 export async function getUserDB() {
     try {
-        const cookie = await getIronSession<UserPrismaProps>(cookies(), {
+        const session = await getIronSession<UserPrismaProps>(cookies(), {
             cookieName: "cookies_challenge",
             password: process.env.PASSWORD_STRONG!
         });
         
-        console.log(cookie);
-
         const user = await db.user.findUnique({where: {
-            id: cookie.id
+            id: session.id
         }, select : {
+            id: true,
             username : true,
             email: true,
         }})
@@ -108,7 +107,40 @@ export async function getUserVerify({email, password}: {email: string, password:
 }
 
 export async function getTweetDB() {
-    return db.tweet.findMany({where: {
-        content: {not: null}
-    }});
+    const id = await getSession();
+
+    if (id) {
+        return db.tweet.findMany({
+            where: {
+            authorId: {
+                not: id
+            },
+            content: {not: null}
+        }, select: {
+            id: true,
+            content: true,
+            title: true,
+            author: {
+              select: {
+                username: true,
+              }
+            }
+        }});
+    }
+
+    return db.tweet.findMany({
+        where: {
+            content: {not: null}
+        },
+        select: {
+            id: true,
+            content: true,
+            title: true,
+            author: {
+              select: {
+                username: true,
+              }
+            }
+          }
+    })
 }
