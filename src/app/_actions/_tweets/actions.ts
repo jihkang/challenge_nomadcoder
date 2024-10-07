@@ -7,10 +7,10 @@ export async function getTweetId(id: number) {
         const tweet = await db.tweet.findUnique({where: {
             id: id,
         }});
-
+        
         return tweet;
     } catch(ex) {
-        console.log(ex);
-        redirect("/");
+
+        return redirect("/");
     }
 }

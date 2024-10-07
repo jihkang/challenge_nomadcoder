@@ -1,4 +1,4 @@
-import { db, getUserDB } from "@/lib/db";
+import { getUserDB } from "@/lib/db";
 import { redirect } from "next/navigation";
 
 export async function getUser() {
