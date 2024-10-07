@@ -1,10 +1,11 @@
 "use client";
 
-import { ReactHTMLElement } from "react";
+import { ReactHTMLElement, useEffect, useRef, useState } from "react";
 
 interface InputProps extends React.InputHTMLAttributes<HTMLInputElement>{
     name?: string;
     errors?: string[];
+    success?: boolean;
 } 
 
 export default function Input({name, errors, ...rest}: InputProps) {

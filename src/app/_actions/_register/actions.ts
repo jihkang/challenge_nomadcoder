@@ -4,8 +4,6 @@ import { z } from "zod";
 import bcrypt from "bcrypt"
 
 import { createUser, db } from "@/lib/db";
-import { getIronSession } from "iron-session";
-import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 
 const checkEmail = (email: string) => {

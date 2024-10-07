@@ -1,36 +1,26 @@
-"use client";
-
 import { getTweetId } from "@/_actions/_tweets/actions";
-import { useParams } from "next/navigation";
-import { useEffect, useState } from "react";
+import { redirect } from "next/navigation";
 
-export default function Tweet() {
-    const {id} = useParams();
-    const [hydrated, setHydrated] = useState(false);
-    const [tweet, setTweet] = useState<any>();
-    useEffect(() => {
-        setHydrated(true);
-    }, []);
+interface TweetProps {
+  title: string;
+  content: string | null;
+};
 
-    useEffect(() => {
-        const asyncGetTweet = async() => {
-            const tweet = await getTweetId(+id);
-            setTweet(tweet);
-        }
-        asyncGetTweet();
-    }, [id]);
+export default async function Tweet({ params: { id } }: { params: { id: string } }) {
+  const tweet: TweetProps | null = await getTweetId(+id);
+  
+  if (tweet === null) {
+    redirect('/');
+  }
 
-    if (!hydrated || !tweet) {
-        return <>loading...</>
-    }
-    return <>
-        <div>
-            <h1>
-                {tweet.title}
-            </h1>
-            <h2>
-                {tweet.content}
-            </h2>
-        </div>
-    </>
+  return <>
+    <div className="">
+      <h1>
+        {tweet?.title}
+      </h1>
+      <h2>
+        {tweet?.content}
+      </h2>
+    </div>
+  </>
 }
